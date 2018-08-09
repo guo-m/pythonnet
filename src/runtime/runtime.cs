@@ -544,6 +544,9 @@ namespace Python.Runtime
             Py_DecRef(op);
             return;
 #else
+            /////////////////dltrace////////////////////////
+            CLRObjTracker.Log(op,"Runtime.XDecref");
+            /////////////////dltrace////////////////////////
             var p = (void*)op;
             if ((void*)0 != p)
             {

@@ -376,6 +376,15 @@ namespace Python.Runtime
             set { _SuppressOverloads = value; }
         }
 
+
+
+        [ModuleFunction]
+        [ForbidPythonThreads]
+        public static DummyClass DummyMethod()
+        {
+            return DummyClass.instance;
+        }
+
         [ModuleFunction]
         [ForbidPythonThreads]
         public static Assembly AddReference(string name)
