@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -223,6 +223,15 @@ namespace Python.Runtime
 
                 // Make sure we clean up properly on app domain unload.
                 AppDomain.CurrentDomain.DomainUnload += OnDomainUnload;
+                //////////////////dltrace/////////////////////
+/*                Exec(@"
+import UnityEngine
+import threading
+UnityEngine.Debug.Log('>>>>>>>>> Done with PythonEngine.Initialized threading.current_thread() = %s'%threading.current_thread())
+");
+*/
+                //////////////////dltrace/////////////////////
+
             }
         }
 
@@ -302,6 +311,62 @@ namespace Python.Runtime
         {
             if (initialized)
             {
+                //////////////////dltrace/////////////////////
+/*                Exec(@"
+import UnityEngine
+import threading
+UnityEngine.Debug.Log('>>>>>>>>> In PythonEngine.Shutdown() threading.current_thread() = %s'%threading.current_thread())
+");
+*/
+                //////////////////dltrace/////////////////////
+
+                //////////////////dltrace/////////////////////
+/*                Exec(@"
+import UnityEngine
+
+import sgtk
+UnityEngine.Debug.Log('>>>>>>>>> Destroying the engine')
+sgtk.platform.current_engine().destroy()
+UnityEngine.Debug.Log('>>>>>>>>> Engine destroyed')
+
+from sgtk.platform.qt import QtGui
+theApp = QtGui.QApplication.instance()
+
+UnityEngine.Debug.Log('>>>>>>>>> processing events')
+theApp.processEvents()
+
+if theApp:
+    for child in theApp.children():
+        UnityEngine.Debug.Log('>>>>>>>>> Scheduling for deletion: %s'%child)
+        child.deleteLater()
+
+    UnityEngine.Debug.Log('>>>>>>>>> processing events')
+    theApp.processEvents()
+
+    UnityEngine.Debug.Log('>>>>>>>>> calling quit on QApplication')
+    retVal = theApp.quit()
+    UnityEngine.Debug.Log('>>>>>>>>> done. retVal = %s'%retVal)
+
+    UnityEngine.Debug.Log('>>>>>>>>> processing events')
+    theApp.processEvents()
+
+#import sys
+#UnityEngine.Debug.Log('>>>>>>>>> calling sys.exit()')
+#sys.exit()
+#UnityEngine.Debug.Log('>>>>>>>>> done calling sys.exit()')
+
+");
+*/
+                //////////////////dltrace/////////////////////
+
+                //////////////////dltrace/////////////////////
+/*                Exec(@"
+import UnityEngine
+UnityEngine.Debug.Log('>>>>>>>>> Back from python cleanup')
+");
+*/
+                //////////////////dltrace/////////////////////
+
                 PyScopeManager.Global.Clear();
                 Marshal.FreeHGlobal(_pythonHome);
                 _pythonHome = IntPtr.Zero;
@@ -311,6 +376,7 @@ namespace Python.Runtime
                 _pythonPath = IntPtr.Zero;
 
                 Runtime.Shutdown();
+
 
                 AppDomain.CurrentDomain.DomainUnload -= OnDomainUnload;
                 initialized = false;
